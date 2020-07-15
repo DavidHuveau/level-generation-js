@@ -8,7 +8,7 @@ const COIN_CLASS = "coin";
 
 const TILE_TYPE = Object.freeze({
   EARTH: { id: 1, className: EARTH_CLASS },
-  COIN: { id: 2, className: COIN_CLASS }
+  COIN: { id: 2, className: COIN_CLASS },
 });
 
 const TILE_SIZE = 50;
@@ -25,7 +25,7 @@ class LevelGeneration {
       [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
       [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ];
 
     this.displayLevel();
@@ -43,8 +43,10 @@ class LevelGeneration {
     const tileType = this.grid[rowIndex][columnIndex];
     if (tileType === 0) return;
 
-    const tileKeyInTypeObject = Object.keys(TILE_TYPE).find(key => TILE_TYPE[key].id === tileType);
-    let tileElement = document.createElement("div");
+    const tileKeyInTypeObject = Object.keys(TILE_TYPE).find(
+      (key) => TILE_TYPE[key].id === tileType,
+    );
+    const tileElement = document.createElement("div");
     tileElement.className = TILE_TYPE[tileKeyInTypeObject].className;
     tileElement.style.top = this.addSuffixCssPixel(rowIndex * TILE_SIZE);
     tileElement.style.left = this.addSuffixCssPixel(columnIndex * TILE_SIZE);
@@ -53,7 +55,7 @@ class LevelGeneration {
       this.stage.appendChild(tileElement);
     } else if (tileType === TILE_TYPE.EARTH.id) {
       this.stage.appendChild(
-        this.mergeWithAdjacentTiles(rowIndex, columnIndex, tileElement)
+        this.mergeWithAdjacentTiles(rowIndex, columnIndex, tileElement),
       );
     }
   }
@@ -86,6 +88,7 @@ class LevelGeneration {
     return tileElement;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   addSuffixCssPixel(string) {
     return `${string}px`;
   }
